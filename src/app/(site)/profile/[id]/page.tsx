@@ -14,20 +14,19 @@ type Post = {
   vol_hrs: Number;
 };
 
-const getTopics = async () => {
+const getTopicById = async (id: any) => {
   try {
-    const res = await fetch("http://localhost:3000/api/topics", {
+    const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
       cache: "no-store",
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch topics");
+      throw new Error("Failed to fetch topic");
     }
-    // console.log(res.json());
 
     return res.json();
   } catch (error) {
-    console.log("Error loading topics: ", error);
+    console.log(error);
   }
 };
 
@@ -48,16 +47,19 @@ const getTopics = async () => {
 //   content: string;
 // }
 
-async function Profile() {
-  const data = await getTopics();
-  console.log(data);
+async function ProfileId({ params }: any) {
+  const { id } = params;
+  console.log(id)
+  const data = await getTopicById(id);
+  const { user_img, username, first_name, last_name, email, phone, vol_hrs } = data;
+//   console.log(data);
   return (
     <>
       <div>
-        <ProfileComponent id={undefined} exdata={undefined} />
+        <ProfileComponent id={id} exdata={data} />
       </div>
     </>
   );
 }
 
-export default Profile;
+export default ProfileId;
