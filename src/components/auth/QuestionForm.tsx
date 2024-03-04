@@ -111,7 +111,8 @@ const QuestionForm = (props: Props) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  What do you hope to gain from your volunteer experience?
+                  Which of our programs or activities are you most interested
+                  in, and why?
                 </FormLabel>
                 <FormControl>
                   <Textarea placeholder="" className="resize-none" {...field} />

@@ -40,7 +40,7 @@ export async function POST(request: NextRequest): Promise<any> {
         );
       }
       let userData = {
-        user_id: "3",
+        user_id: "1",
         first_name: first_name,
         last_name: last_name,
         email: email,

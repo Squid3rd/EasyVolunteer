@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+
 
 const formSchema = z
   .object({
@@ -67,6 +69,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     },
   });
 
+  const { toast: showToast } = useToast();
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData: FormData = new FormData();
 
@@ -77,6 +81,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     formData.append("phone", values.Phone);
     formData.append("password", values.Password);
 
+    
     try {
       const response = await fetch("api/auth", {
         method: "POST",
@@ -88,6 +93,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
       if (response) {
         const data = await response.json();
         console.log("REGISTER_FORM:", data);
+        showToast({
+          description: "Register success!",
+          variant: "default",
+        });
+
+        login(values)
         onRegistrationComplete();
       }
     } catch (error) {
@@ -96,6 +107,36 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
       console.log("TRANSACTION_ENDING", formData);
     }
   }
+
+  async function login(values: z.infer<typeof formSchema>) {
+    const formData: FormData = new FormData();
+
+    formData.append("email", values.Email);
+    formData.append("password", values.Password);
+
+    console.log(values.Email);
+    console.log(values.Password);
+
+    try {
+      const response = await fetch("api/auth", {
+        method: "PUT",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      if (response) {
+        const data = await response.json();
+        console.log("LOGIN_FORM:", data);
+
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("TRANSACTION_ENDING", formData);
+    }
+  }  
+
   const router = useRouter();
 
   return (
