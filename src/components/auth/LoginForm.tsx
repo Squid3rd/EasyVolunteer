@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+
 
 type Props = {};
 const formSchema = z.object({
@@ -22,6 +24,10 @@ const formSchema = z.object({
 });
 
 const Login = (props: Props) => {
+
+  const router = useRouter();
+  const { toast: showToast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,6 +56,12 @@ const Login = (props: Props) => {
       if (response) {
         const data = await response.json();
         console.log("LOGIN_FORM:", data);
+        
+        showToast({
+          description: "Login success!",
+          variant: "default",
+        });
+        
         router.push("/");
       }
     } catch (error) {
@@ -57,9 +69,7 @@ const Login = (props: Props) => {
     } finally {
       console.log("TRANSACTION_ENDING", formData);
     }
-  }
-
-  const router = useRouter();
+  }  
 
   return (
     <div>

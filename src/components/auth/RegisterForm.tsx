@@ -39,7 +39,21 @@ const formSchema = z
     path: ["ConfirmPassword"],
   });
 
-const RegisterForm = () => {
+  interface RegisterFormProps {
+    onRegistrationComplete: () => void; // Function to be called upon successful registration
+  }
+
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+
+    // Perform registration logic...
+    // If registration is successful:
+    onRegistrationComplete(); // Call the passed function after successful registration
+  };
+  
+const RegisterForm: React.FC<RegisterFormProps> = ({
+  onRegistrationComplete,
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -74,14 +88,13 @@ const RegisterForm = () => {
       if (response) {
         const data = await response.json();
         console.log("REGISTER_FORM:", data);
-        router.push("/login");
+        onRegistrationComplete();
       }
     } catch (error) {
       console.log(error);
     } finally {
       console.log("TRANSACTION_ENDING", formData);
     }
-    
   }
   const router = useRouter();
 
@@ -206,3 +219,8 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+
+function onRegistrationComplete() {
+    throw new Error("Function not implemented.");
+}
+
