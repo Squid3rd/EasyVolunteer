@@ -18,13 +18,13 @@ const Navbar = () =>{
                             </div>
                             <div className='ml-auto flex items-center'>
                                 <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
-                                    <Link href="/home">
+                                    <Link href="/">
                                         <p className="text-base font-bold">Home</p>
                                     </Link>
-                                    <Link href="/home">
+                                    <Link href="/detail">
                                         <p className="text-base  font-bold">Volunteer</p>
                                     </Link>
-                                    <Link href="/home">
+                                    <Link href="#about-me">
                                         <p className="text-base  font-bold">About</p>
                                     </Link>
                                     <Link href="/home">

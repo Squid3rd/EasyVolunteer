@@ -11,14 +11,14 @@ export default function Home() {
         </div>
         <VolunteerReel />
         <div className='py-20 mx-auto text-center flex flex-col items-center max-w-3xl'>
-          <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
+          <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl' id="about-me">
             About {' '}
             <span className='text-blue-600'>
               me
             </span>
             .
-          </h1>
-          <div className=" lg:h-40 text-center mt-10">
+          </h1 >
+          <div className=" lg:h-40 text-center mt-10" >
               <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
