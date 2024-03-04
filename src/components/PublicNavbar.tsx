@@ -30,10 +30,10 @@ const Navbar = () =>{
                                     <Link href="/home">
                                         <p className="text-base  font-bold">Contact</p>
                                     </Link>
-                                    <Link href="/home">
+                                    <Link href="/login">
                                         <p className="text-base  font-bold">Sign In</p>
                                     </Link>
-                                    <Link href="/home">
+                                    <Link href="/register">
                                         <Button className="text-base  font-bold h-8">
                                             Sign Up
                                         </Button>
