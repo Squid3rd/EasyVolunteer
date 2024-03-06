@@ -6,6 +6,7 @@ import { Button } from "./ui/button"
 import { useSession, signOut } from "next-auth/react";
 const Navbar = () =>{
     const { data: session, status } = useSession();
+    console.log("Session = ",session);
     return (
         <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
             <header className="relative bg-white">
@@ -51,7 +52,9 @@ const Navbar = () =>{
                                         </Button>
                                         )}
                                     <div>
+                                    <Link href="/profile/1">
                                         {session?.user.name}
+                                    </Link>
                                     </div>
                                 </div>
                             </div>

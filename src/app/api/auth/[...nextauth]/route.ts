@@ -41,6 +41,8 @@ const authOptions:NextAuthOptions = {
                 token.createdAt = user.createdAt
                 token.email = user.email
                 token.role = user.role
+                token.lastname = user.lastname
+                token.phone = user.phone
             }
 
             return token
@@ -48,6 +50,8 @@ const authOptions:NextAuthOptions = {
         async session({ session, token, user }) {
             session.user.email = token.email ? token.email : "";
             session.user.role = token.role
+            session.user.lastname = token.lastname
+            session.user.phone = token.phone
             return session
         }
     }
