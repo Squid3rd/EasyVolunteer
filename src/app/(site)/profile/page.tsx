@@ -14,22 +14,22 @@ type Post = {
   vol_hrs: Number;
 };
 
-const getTopics = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/topics", {
-      cache: "no-store",
-    });
+// const getTopics = async () => {
+//   try {
+//     const res = await fetch("http://localhost:3000/api/topics", {
+//       cache: "no-store",
+//     });
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch topics");
-    }
-    // console.log(res.json());
+//     if (!res.ok) {
+//       throw new Error("Failed to fetch topics");
+//     }
+//     // console.log(res.json());
 
-    return res.json();
-  } catch (error) {
-    console.log("Error loading topics: ", error);
-  }
-};
+//     return res.json();
+//   } catch (error) {
+//     console.log("Error loading topics: ", error);
+//   }
+// };
 
 // async function getData() {
 //   try {
@@ -49,8 +49,7 @@ const getTopics = async () => {
 // }
 
 async function Profile() {
-  const data = await getTopics();
-  console.log(data);
+
   return (
     <>
       <div>

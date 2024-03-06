@@ -1,60 +1,7 @@
 "use client";
-
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 
 function Editprofilecomp({ id, exdata }: any) {
-  const routeto = "/profile/" + exdata.topic._id;
-
-  // Filllllee
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleButtonClick = () => {
-    // Trigger a click on the file input when the button is clicked
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Handle the selected file
-    const selectedFile = event.target.files && event.target.files[0];
-    console.log("Selected file:", selectedFile);
-    // Add your file handling logic here
-  };
-
-  //   Update
-  const [newFirst, setNewFirst] = useState(exdata.topic.first_name);
-  const [newLast, setNewlast] = useState(exdata.topic.last_name);
-  const [newPhone, setNewphone] = useState(exdata.topic.phone);
-
-  const router = useRouter();
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ newFirst, newLast, newPhone }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to update topic");
-      }
-      const timeoutId = setTimeout(() => {
-        // Your logic here
-        router.refresh();
-        console.log('Timeout completed after route change');
-      }, 1);
-
-    //   router.refresh();
-      router.push(routeto);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <>
@@ -65,23 +12,23 @@ function Editprofilecomp({ id, exdata }: any) {
               <div className="grid grid-cols-2">
                 <div className="p-3">
                   <div className="flex justify-center">
-                    <img
+                    {/* <Image
                       className="rounded-xl w-[13rem] h-[13rem] m-10"
                       src="https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg"
                       alt="image description"
-                    />
+                    /> */}
                   </div>
                   <div className=" flex justify-center">
                     <input
                       accept=".jpg, .png, .jpeg"
                       type="file"
-                      ref={fileInputRef}
-                      style={{ display: "none" }} // Hide the actual file input
-                      onChange={handleFileChange}
+                      // ref={fileInputRef}
+                      // style={{ display: "none" }} // Hide the actual file input
+                      // onChange={handleFileChange}
                     />
                     <button
                       className="w-2/4 p-3 bg-green-300 hover:bg-green-600 rounded-md"
-                      onClick={handleButtonClick}
+                      // onClick={handleButtonClick}
                     >
                       Change
                     </button>
@@ -89,7 +36,7 @@ function Editprofilecomp({ id, exdata }: any) {
                 </div>
                 <div className="p-2">
                   <form
-                    onSubmit={handleSubmit}
+                    // onSubmit={handleSubmit}
                     className="shadow-md rounded px-8 pt-6 pb-8 mb-4"
                   >
                     <div className="w-full apx-3 mb-6 ">
@@ -103,8 +50,8 @@ function Editprofilecomp({ id, exdata }: any) {
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-black rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         id="grid-first-name"
                         type="text"
-                        value={newFirst}
-                        onChange={(e) => setNewFirst(e.target.value)}
+                        // value={newFirst}
+                        // onChange={(e) => setNewFirst(e.target.value)}
                         placeholder={exdata.topic.first_name}
                       />
                     </div>
@@ -119,8 +66,8 @@ function Editprofilecomp({ id, exdata }: any) {
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-black rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         id="grid-first-name"
                         type="text"
-                        value={newLast}
-                        onChange={(e) => setNewlast(e.target.value)}
+                        // value={newLast}
+                        // onChange={(e) => setNewlast(e.target.value)}
                         placeholder={exdata.topic.last_name}
                       />
                     </div>
@@ -136,8 +83,8 @@ function Editprofilecomp({ id, exdata }: any) {
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-black rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         id="grid-first-name"
                         type="text"
-                        value={newPhone}
-                        onChange={(e) => setNewphone(e.target.value)}
+                        // value={newPhone}
+                        // onChange={(e) => setNewphone(e.target.value)}
                         placeholder={exdata.topic.phone}
                       />
                     </div>

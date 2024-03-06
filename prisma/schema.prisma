@@ -9,11 +9,26 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
 
-model User{
+model User {
+  id        String   @id 
+  email     String   @unique
+  name      String
+  lastname  String
+  createdAt DateTime @default(now())
+  phone     String
+  password   String
+  role       Role     @default(USER)
+}
+model FormUser{
   id String @id
-  email String @unique
-  name String 
-  fullname String
-  createdAt  DateTime @default(now())
+  question1 String
+  question2 String
+  question3 String
+  squestion4 String
 }

@@ -14,6 +14,10 @@ const VolunteerReel = () =>{
         <div className='relative'>
           <div className='mt-6 flex items-center w-full'>
             <div className='w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8'>
+           
+              <VolunteerList/>
+              <VolunteerList/>
+              <VolunteerList/>
               <VolunteerList/>
               {/* {map.map((product, i) => (
                 <ProductListing

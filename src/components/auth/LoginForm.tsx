@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-
+import { signIn } from "next-auth/react";
 
 type Props = {};
 const formSchema = z.object({
@@ -44,33 +44,32 @@ const Login = (props: Props) => {
 
     console.log(values.Email);
     console.log(values.Password);
-
-    try {
-      const response = await fetch("api/auth", {
-        method: "PUT",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      if (response) {
-        const data = await response.json();
-        console.log("LOGIN_FORM:", data);
-        
+    signIn(
+        "credentials",
+        {
+          redirect: false,
+          email: values.Email,
+          password : values.Password,
+          callbackUrl: "/"
+        }
+      ).then((res) => {
+        if (typeof res === "undefined") throw "ไม่สามารถเข้าสู่ระบบได้เนื่องจากไม่มีการตอบกลับ"; // เผื่อว่าไม่มี res
+        const { error } = res;
+        if (error) throw error; // ถ้า error ให้โยนไปที่ catch จัดการ
         showToast({
-          description: "Login success!",
-          variant: "default",
+          description: <p>ยินดีต้อนรับ</p>,
         });
-        
         router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      console.log("TRANSACTION_ENDING", formData);
-    }
-  }  
+      }) .catch((err) => {
+        console.log("🔴", err);
+        if (err instanceof Error) err = err.message; // ปกติแล้วที่มันรับ error มาควรจะเป็น Error instance แต่ของ Nextuath ที่มันโยนมาแม้เราจะโยนเป็น Error instance แต่มันถูกปลี่ยนเป็น string เอง!?
 
+        showToast({
+          description: <p>เข้าสู่ระบบไม่สำเร็จ {err}</p>,
+        });
+      })
+     
+  }  
   return (
     <div>
       <Form {...form}>
@@ -112,7 +111,7 @@ const Login = (props: Props) => {
           </div>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            You still haven't had an Account yet? <br></br>{" "}
+            You still haven&apost had an Account yet?{" "}
             <span
               className="font-semibold leading-6 text-[#4BA8FF] hover:text-indigo-500 cursor-pointer"
               onClick={() => {

@@ -3,8 +3,9 @@ import MaxwidthWrapper from "./MaxWidthWrapper"
 import Link from "next/link"
 import { Icon } from "./Icon"
 import { Button } from "./ui/button"
-
+import { useSession, signOut } from "next-auth/react";
 const Navbar = () =>{
+    const { data: session, status } = useSession();
     return (
         <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
             <header className="relative bg-white">
@@ -30,14 +31,28 @@ const Navbar = () =>{
                                     <Link href="/home">
                                         <p className="text-base  font-bold">Contact</p>
                                     </Link>
+                                    {!session?.user.role && (
                                     <Link href="/login">
                                         <p className="text-base  font-bold">Sign In</p>
                                     </Link>
+                                    )}
+                                    {!session?.user.role && (
                                     <Link href="/register">
                                         <Button className="text-base  font-bold h-8">
                                             Sign Up
                                         </Button>
                                     </Link>
+                                     )}
+                                    {session?.user.role && (
+                                        <Button className="text-base  font-bold h-8"
+                                            onClick={() => signOut({ callbackUrl: "/login" })}
+                                        >
+                                            Sign out
+                                        </Button>
+                                        )}
+                                    <div>
+                                        {session?.user.name}
+                                    </div>
                                 </div>
                             </div>
                         </div>

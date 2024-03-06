@@ -3,8 +3,9 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import useCreateForm from "@/hook/useCreateForm";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -14,9 +15,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import type { FormUser } from "@prisma/client";
+import { useSession, signOut } from "next-auth/react";
 
 
 const answerValidationSchema = z
@@ -32,6 +34,10 @@ const formSchema = z.object({
 type Props = {};
 
 const QuestionForm = (props: Props) => {
+  const createForm = useCreateForm()
+  const { data: session, status } = useSession();
+  const { toast: showToast } = useToast();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,33 +50,40 @@ const QuestionForm = (props: Props) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const formData: FormData = new FormData();
-
+    
     formData.append("answer_1", values.Answer_1);
     formData.append("answer_2", values.Answer_2);
     formData.append("answer_3", values.Answer_3);
     formData.append("answer_4", values.Answer_4);
-
-    try {
-      const response = await fetch("api/auth/question", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      if (response) {
-        const data = await response.json();
-        console.log("QUESTION_FORM:", data);
-        router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      console.log("TRANSACTION_ENDING", formData);
+    const form : FormUser = {
+      id: session?.user.email as string,
+      question1 : values.Answer_1,
+      question2 : values.Answer_2,
+      question3 : values.Answer_3,
+      squestion4 : values.Answer_4
     }
-  }
-  const router = useRouter();
 
+    createForm.mutate(
+      form,
+      {
+        onSuccess(data){
+          showToast({
+            description: "Register success!",
+            variant: "default",
+            
+          });
+          router.push("/");
+        },
+        onError(data){
+          showToast({
+            description: `Register Fail!${data}`,
+            variant: "default",
+          });
+        }
+      }
+    )
+  }
+  
   return (
     <div>
       <Form {...form}>

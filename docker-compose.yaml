@@ -12,18 +12,6 @@ services:
       - .env
     networks:
       - application
-  nginx:
-    container_name: volunteer_nginx
-    image: nginx
-    restart: always
-    ports:
-      - 80:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - volunteer_website
-    networks:
-      - application
   mysql:
     container_name: volunteer_mysql
     image: mysql
