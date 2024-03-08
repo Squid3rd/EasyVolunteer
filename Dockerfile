@@ -17,7 +17,6 @@ WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
-RUN npx prisma migrate dev --name init
 RUN npm run build
 
 # Stage : ทำการ run website โดยใช้ built file จาก stage ก่อนหน้า
