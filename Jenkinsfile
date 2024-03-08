@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        DOCKER_IMAGE        = 'nontapatsquid/fastapi-webhook:latest'
-        REMOTE_HOST         = 'darklmoon@34.143.164.27'
+        REMOTE_HOST         = 'nontapatsquid@34.143.164.27'
         SSH_CREDENTIALS     = 'ssh_volunteer'
     }
 
@@ -17,14 +16,13 @@ pipeline {
             }
         }
 
-        stage('Deploy with Docker Compose on Remote Server') {
+        stage('Remote Docker Compose') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
-                    script {
-                        sh "scp -o StrictHostKeyChecking=no $DOCKER_COMPOSE_FILE $REMOTE_HOST:~/docker-compose.yml"
-                        sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f ~/docker-compose.yml pull'"
-                        sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f ~/docker-compose.yml up -d'"
-                    }
+                    sh "scp $DOCKER_COMPOSE_FILE $REMOTE_HOST:/path/to/remote/directory/"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f /path/to/remote/directory/$DOCKER_COMPOSE_FILE pull'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f /path/to/remote/directory/$DOCKER_COMPOSE_FILE up -d'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a'"
                 }
             }
         }
