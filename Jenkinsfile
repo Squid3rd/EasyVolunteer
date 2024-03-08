@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yaml'
         REMOTE_HOST         = 'darklmoon@34.143.164.27'
-        SSH_CREDENTIALS     = 'ssh-p'
+        SSH_CREDENTIALS     = 'ssh_volunteer'
     }
 
     stages {
