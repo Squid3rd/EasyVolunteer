@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Define variablesggdssss
-        DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
-        // DOCKER_IMAGE1    = 'nontapatsquid/easyvoluteer_volunteer_website:latest' 
-        // DOCKER_IMAGE2    = 'mysql' 
-        // DOCKER_IMAGE3    = 'nontapatsquid/phpmyadmin:latest' 
         DOCKER_CREDENTIALS = credentials('dockerhub')
     }
 
@@ -18,7 +13,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image with Compose') {
+        stage('Build Docker Images with Compose') {
             steps {
                 dir('./') {
                     sh 'echo "Running in $(pwd)"'
@@ -31,9 +26,11 @@ pipeline {
             steps {
                 script {
                     sh 'echo $DOCKER_CREDENTIALS_PSW | docker login --username $DOCKER_CREDENTIALS_USR --password-stdin'
-                    // sh 'docker push $DOCKER_IMAGE1'
-                    sh 'docker push $DOCKER_IMAGE'
-                    // sh 'docker push $DOCKER_IMAGE3'
+                    
+                    // Match the service names from docker-compose.yaml
+                    sh 'docker-compose push volunteer_website'
+                    sh 'docker-compose push volunteer_mysql'
+                    sh 'docker-compose push volunteer_phpmyadmin'
                 }
             }
         }
