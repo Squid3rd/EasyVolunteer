@@ -5,7 +5,7 @@ pipeline {
         // Define variablesggdsss
         // DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
         // DOCKER_IMAGE1    = 'nontapatsquid/easyvoluteer_volunteer_website:latest' 
-        DOCKER_IMAGE2    = 'nontapatsquid/mysql:latest' 
+        DOCKER_IMAGE2    = 'volunteer_mysql' 
         // DOCKER_IMAGE3    = 'nontapatsquid/phpmyadmin:latest' 
         DOCKER_CREDENTIALS = credentials('dockerhub')
     }
