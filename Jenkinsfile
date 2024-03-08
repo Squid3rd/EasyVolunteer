@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define variablesggdsss
-        // DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
+        // DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest's
         DOCKER_IMAGE1    = 'f4b0a7fc2d80' 
         DOCKER_IMAGE2    = 'mysql' 
         DOCKER_IMAGE3    = 'phpmyadmin' 
