@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Define variables Test-00-01-02-03-04ssssss
+        // Define variables Test-00-01-02-03-04ssssssj
         DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
         DOCKER_CREDENTIALS = credentials('dockerhub')
     }
