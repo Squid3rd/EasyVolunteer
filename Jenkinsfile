@@ -28,7 +28,10 @@ pipeline {
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a -q | xargs -r docker rm'"
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker images -q | xargs -r docker rmi -f'"
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $DOCKER_IMAGE'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name fastapi-webhook -p 3000:80 $DOCKER_IMAGE'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name easyvoluteer_volunteer_website -p 3000:80 $DOCKER_IMAGE'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name mysql -p 3306:80 $DOCKER_IMAGE'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name phpmyadmin -p 8081:80 $DOCKER_IMAGE'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name fastapi-webhook -p 8085:80 $DOCKER_IMAGE'"
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a'"
                 }
             }
