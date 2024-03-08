@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        REMOTE_HOST         = 'nontapatsquid@34.143.164.27'
+        REMOTE_HOST         = 'darklmoon@34.143.164.27'
         SSH_CREDENTIALS     = 'ssh_volunteer'
     }
 
