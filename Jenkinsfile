@@ -2,27 +2,30 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        REMOTE_HOST         = 'darklmoon@34.143.164.27'
-        SSH_CREDENTIALS     = 'ssh_volunteer'
+        REMOTE_HOST     = 'darklmoon@34.143.164.27'
+        SSH_CREDENTIALS = 'ssh_volunteer'
+        IMAGES_AND_CONTAINERS = [
+            ['nontapatsquid/fastapi-webhook:latest', 'container1'],
+            ['nontapatsquid/phpmyadmin:latest', 'volunteer_phpmyadmin'],
+            ['nontapatsquid/easyvoluteer_volunteer_website:latest', 'volunteer_website'],
+            ['nontapatsquid/mysql:latest', 'volunteer_mysql']
+        ]
     }
 
     stages {
-        stage('Login to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
-                    sh 'echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USER --password-stdin'
-                }
-            }
-        }
-
-        stage('Remote Docker Compose') {
+        stage('Pull and Run Containers') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
-                    sh "scp $DOCKER_COMPOSE_FILE $REMOTE_HOST:/path/to/remote/directory/"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f /path/to/remote/directory/$DOCKER_COMPOSE_FILE pull'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f /path/to/remote/directory/$DOCKER_COMPOSE_FILE up -d'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a'"
+                    script {
+                        for (entry in IMAGES_AND_CONTAINERS) {
+                            def image = entry[0]
+                            def container = entry[1]
+
+                            sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $image'"
+                            sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name $container $image'"
+                        }
+                        sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a'"
+                    }
                 }
             }
         }
