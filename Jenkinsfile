@@ -21,7 +21,7 @@ pipeline {
                 script {
                     def services = sh(script: "docker-compose -f $DOCKER_COMPOSE_FILE config --services", returnStdout: true).trim().split('\n')
                     services.each { service ->
-                        sh "docker pull darklmoon/fastapi-webhook:$service"
+                        sh "docker pull nontapatsquid/fastapi-webhook:$service"
                     }
                 }
             }
