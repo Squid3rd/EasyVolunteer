@@ -39,15 +39,22 @@ const authOptions:NextAuthOptions = {
 
             if (account) {
                 token.createdAt = user.createdAt
+                token.id = user.id
                 token.email = user.email
                 token.role = user.role
+                token.lastname = user.lastname
+                token.phone = user.phone
             }
 
             return token
         },
         async session({ session, token, user }) {
+
             session.user.email = token.email ? token.email : "";
+            session.user.id = token.id
             session.user.role = token.role
+            session.user.lastname = token.lastname
+            session.user.phone = token.phone
             return session
         }
     }
