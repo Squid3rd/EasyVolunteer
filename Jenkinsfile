@@ -2,34 +2,61 @@ pipeline {
     agent any
 
     environment {
-        REMOTE_HOST     = 'darklmoon@34.143.164.27'
-        SSH_CREDENTIALS = 'ssh_volunteer'
+        DOCKER_CREDENTIALS = credentials('dockerhub')
     }
 
     stages {
-        stage('Login to Docker Hub') {
+        stage('Start Jenkins') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
-                    sh 'echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USER --password-stdin'
+                sh 'echo Start Jenkins............'
+                sh 'echo docker : user = $DOCKER_CREDENTIALS_USR : password = $DOCKER_CREDENTIALS_PSW'
+            }
+        }
+
+        stage('Build Docker Images with Compose') {
+            steps {
+                dir('./') {
+                    sh 'echo "Running in $(pwd)"'
+                    sh 'docker-compose build'
                 }
             }
         }
 
-        stage('Run Docker on Remote Server') {
-    steps {
-        sshagent([SSH_CREDENTIALS]) {
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    sh 'echo $DOCKER_CREDENTIALS_PSW | docker login --username $DOCKER_CREDENTIALS_USR --password-stdin'
+                    
+                    // Match the service names from docker-compose.yaml
+                    sh 'docker-compose push nontapatsquid/myrepo:volunteer_websit'
+                    sh 'docker-compose push nontapatsquid/myrepo:mysql'
+                    sh 'docker-compose push nontapatsquid/myrepo:phpmyadmin'
+                }
+            }
+        }
 
-             sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name volunteer_website -p 8085:80 volunteer_website'"
-             sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name mysql -p 8085:80 mysql'"
-             sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name phpmyadmin -p 8085:80 phpmyadmin'"
-            // script {
-            //     def composeFilePath = "$WORKSPACE/docker-compose.yml"
-            //     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $composeFilePath pull volunteer_website mysql phpmyadmin'"
-            //     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $composeFilePath up -d'"
-            // }
+        stage('Clear Docker Components') {
+            steps {
+                script {
+                    sh 'docker-compose down'
+                    sh 'docker system prune -af'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    sh 'docker-compose pull'
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
-    }
-}
-// dd
