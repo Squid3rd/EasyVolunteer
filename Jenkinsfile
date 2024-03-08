@@ -3,7 +3,9 @@ pipeline {
 
     environment {
         // It's good practice to keep sensitive or specific data like Docker images, remote hosts, and credentials out of the script for security and flexibility.
-        DOCKER_IMAGE    = 'nontapatsquid/fastapi-webhook:latest' // Ensure this Docker image name is correct and accessible.'
+        DOCKER_IMAGE1    = 'nontapatsquid/easyvoluteer_volunteer_website:latest' 
+        DOCKER_IMAGE2    = 'nontapatsquid/mysql:latest' 
+        DOCKER_IMAGE3    = 'nontapatsquid/phpmyadmin:latest' 
         REMOTE_HOST     = 'darklmoon@34.143.164.27' // Replace with your actual username and remote IP.d
         SSH_CREDENTIALS = 'ssh_volunteer' // Use the ID of the Jenkins stored SSH credentials Test-00.s-sssxsf
     }
@@ -27,11 +29,12 @@ pipeline {
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -q | xargs -r docker stop'"
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a -q | xargs -r docker rm'"
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker images -q | xargs -r docker rmi -f'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $DOCKER_IMAGE'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name easyvoluteer_volunteer_website -p 3000:80 $DOCKER_IMAGE'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name mysql -p 3306:80 $DOCKER_IMAGE'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name phpmyadmin -p 8081:80 $DOCKER_IMAGE'"
-                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name fastapi-webhook -p 8085:80 $DOCKER_IMAGE'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $DOCKER_IMAGE1'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $DOCKER_IMAGE2'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $DOCKER_IMAGE3'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name easyvoluteer_volunteer_website -p 3000:80 $DOCKER_IMAGE1'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name mysql -p 3306:80 $DOCKER_IMAGE2'"
+                    sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker run -d --name phpmyadmin -p 8081:80 $DOCKER_IMAGE3'"
                     sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker ps -a'"
                 }
             }
