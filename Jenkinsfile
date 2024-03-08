@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define variablesggdsss
-        DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
+        // DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
         // DOCKER_IMAGE1    = 'nontapatsquid/easyvoluteer_volunteer_website:latest' 
         // DOCKER_IMAGE2    = 'mysql' 
         // DOCKER_IMAGE3    = 'nontapatsquid/phpmyadmin:latest' 
@@ -32,7 +32,7 @@ pipeline {
                 script {
                     sh 'echo $DOCKER_CREDENTIALS_PSW | docker login --username $DOCKER_CREDENTIALS_USR --password-stdin'
                     // sh 'docker push $DOCKER_IMAGE1'
-                    sh 'docker push $DOCKER_IMAGE'
+                    // sh 'docker push $DOCKER_IMAGE'
                     // sh 'docker push $DOCKER_IMAGE3'
                 }
             }
