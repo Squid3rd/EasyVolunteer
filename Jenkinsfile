@@ -6,9 +6,9 @@ pipeline {
         SSH_CREDENTIALS = 'ssh_volunteer'
         IMAGES_AND_CONTAINERS = [
             ['nontapatsquid/fastapi-webhook:latest', 'container1'],
-            ['nontapatsquid/phpmyadmin:latest', 'volunteer_phpmyadmin'],
-            ['nontapatsquid/easyvoluteer_volunteer_website:latest', 'volunteer_website'],
-            ['nontapatsquid/mysql:latest', 'volunteer_mysql']
+            ['phpmyadmin:latest', 'volunteer_phpmyadmin'],
+            ['easyvoluteer_volunteer_website:latest', 'volunteer_website'],
+            ['mysql:latest', 'volunteer_mysql']
         ]
     }
 
