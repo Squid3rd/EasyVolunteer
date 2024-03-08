@@ -19,7 +19,7 @@ pipeline {
             steps {
                 dir('./') {
                     sh 'echo "Running in $(pwd)"'
-                    sh 'docker-compose build --no-cache'
+                    sh 'docker-compose build'
                 }
             }
         }
