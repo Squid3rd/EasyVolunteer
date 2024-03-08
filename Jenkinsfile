@@ -20,7 +20,7 @@ pipeline {
         sshagent([SSH_CREDENTIALS]) {
             script {
                 def composeFilePath = "$WORKSPACE/docker-compose.yml"
-                sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $composeFilePath pull volunteer_website volunteer_mysql volunteer_phpmyadmin'"
+                sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $composeFilePath pull volunteer_website mysql phpmyadmin'"
                 sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $composeFilePath up -d'"
             }
         }
