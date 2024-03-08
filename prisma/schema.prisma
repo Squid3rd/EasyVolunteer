@@ -32,3 +32,9 @@ model FormUser{
   question3 String
   squestion4 String
 }
+
+model UserVolunteer {
+  id        String   @id
+  volunteer_id String
+  user_id String
+}

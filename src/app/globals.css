@@ -74,9 +74,15 @@
 .btn {
   @apply font-bold py-2 px-16 my-5 rounded;
 }
-.btn-blue {
+.btn-green {
   @apply bg-green-500 text-white;
 }
-.btn-blue:hover {
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+.btn-green:hover {
   @apply bg-green-600;
+}
+.btn-blue:hover {
+  @apply bg-blue-600;
 }
