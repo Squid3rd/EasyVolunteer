@@ -33,7 +33,7 @@ pipeline {
                     script {
                         def services = sh(script: "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $DOCKER_COMPOSE_FILE config --services'", returnStdout: true).trim().split('\n')
                         services.each { service ->
-                            sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull darklmoon/fastapi-webhook:$service'"
+                            sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull nontapatsquid/fastapi-webhook:$service'"
                             sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $DOCKER_COMPOSE_FILE up -d $service'"
                         }
                     }
