@@ -29,8 +29,8 @@ pipeline {
                     
                     // Match the service names from docker-compose.yaml
                     sh 'docker-compose push volunteer_website'
-                    sh 'docker-compose push volunteer_mysql'
-                    sh 'docker-compose push volunteer_phpmyadmin'
+                    sh 'docker-compose push mysql'
+                    sh 'docker-compose push phpmyadmin'
                 }
             }
         }
