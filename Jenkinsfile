@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         REMOTE_HOST     = 'darklmoon@34.143.164.27'
-        SSH_CREDENTIALS = 'ssh-volunteer'
+        SSH_CREDENTIALS = 'ssh_volunteer'
     }
 
     stages {
