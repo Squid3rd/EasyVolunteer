@@ -3,6 +3,7 @@ services:
   volunteer_website:
     container_name: volunteer_website
     build: .
+    image: nontapatsquid/volunteer_website:lastest
     ports:
       - 3000:3000
     restart: on-failure
@@ -14,7 +15,7 @@ services:
       - application
   mysql:
     container_name: volunteer_mysql
-    image: mysql
+    image: nontapatsquid/mysql:lastest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
@@ -31,7 +32,7 @@ services:
       - application
   phpmyadmin:
     container_name: volunteer_phpmyadmin
-    image: phpmyadmin
+    image: nontapatsquid/phpmyadmin:lastest
     restart: always
     ports:
       - 8081:80
