@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Define variablesggdsss
+        // Define variablesggdssss
         DOCKER_IMAGE       = 'nontapatsquid/fastapi-webhook:latest'
         // DOCKER_IMAGE1    = 'nontapatsquid/easyvoluteer_volunteer_website:latest' 
         // DOCKER_IMAGE2    = 'mysql' 
