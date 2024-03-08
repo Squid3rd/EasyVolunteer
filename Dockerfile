@@ -10,16 +10,21 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Stage : ทำการ build website และ ทำการ generate prisma client
-# Rebuild the source code only when needed
-FROM base AS builder
+# Stage: Initialize Prisma
+FROM deps AS prisma_init
+WORKDIR /usr/src/app
+COPY . .
+RUN npx prisma init
+
+# Stage: Build website and generate Prisma client
+FROM prisma_init AS builder
 WORKDIR /usr/src/app
 COPY --from=deps /usr/src/app/node_modules ./node_modules
-COPY . .
 RUN npx prisma generate
+COPY . .
 RUN npm run build
 
-# Stage : ทำการ run website โดยใช้ built file จาก stage ก่อนหน้า
+# Stage: Run website using built files from the previous stage
 FROM base AS runner
 WORKDIR /usr/src/app
 
@@ -30,11 +35,10 @@ COPY --from=builder /usr/src/app/prisma ./prisma
 COPY --from=builder /usr/src/app/.next/standalone ./
 COPY --from=builder /usr/src/app/.next/static ./.next/static
 
-
 # More environment variables can be added here!
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
-# กำหนด Timezone ให้กับ Container
+# Set the timezone for the container
 RUN apk add --no-cache tzdata
 ENV TZ=Asia/Bangkok
 ENV NODE_ENV production
