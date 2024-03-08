@@ -28,7 +28,7 @@ pipeline {
                     sh 'echo $DOCKER_CREDENTIALS_PSW | docker login --username $DOCKER_CREDENTIALS_USR --password-stdin'
                     
                     // Match the service names from docker-compose.yaml
-                    sh 'docker-compose push nontapatsquid/myrepo:volunteer_websit'
+                    sh 'docker-compose push nontapatsquid/myrepo:volunteer_website'
                     sh 'docker-compose push nontapatsquid/myrepo:mysql'
                     sh 'docker-compose push nontapatsquid/myrepo:phpmyadmin'
                 }
