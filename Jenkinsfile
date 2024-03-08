@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE1    = 'nontapatsquid/easyvoluteer_volunteer_website:latest' 
         DOCKER_IMAGE2    = 'nontapatsquid/mysql:latest' 
         DOCKER_IMAGE3    = 'nontapatsquid/phpmyadmin:latest' 
-        REMOTE_HOST     = 'darklmoon@34.143.164.27' // Replace with your actual username and remote IP.d
+        REMOTE_HOST     = 'darklmoon@34.143.164.27' // Replace with your actual username and remote IP.dd
         SSH_CREDENTIALS = 'ssh_volunteer' // Use the ID of the Jenkins stored SSH credentials Test-00.s-sssxsf
     }
 
