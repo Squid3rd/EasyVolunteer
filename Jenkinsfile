@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_COMPOSE_FILE = 'docker-compose.yaml'
+        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+        DOCKER_IMAGE        = 'nontapatsquid/fastapi-webhook:latest'
         REMOTE_HOST         = 'darklmoon@34.143.164.27'
-        SSH_CREDENTIALS     = 'ssh_volunteer'
+        SSH_CREDENTIALS     = 'ssh-p'
     }
 
     stages {
@@ -16,26 +17,13 @@ pipeline {
             }
         }
 
-        stage('Pull Docker Images from Docker Hub') {
-            steps {
-                script {
-                    def services = sh(script: "docker-compose -f $DOCKER_COMPOSE_FILE config --services", returnStdout: true).trim().split('\n')
-                    services.each { service ->
-                        sh "docker pull $service"
-                    }
-                }
-            }
-        }
-
-        stage('Run Docker on Remote Server') {
+        stage('Deploy with Docker Compose on Remote Server') {
             steps {
                 sshagent([SSH_CREDENTIALS]) {
                     script {
-                        def services = sh(script: "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $DOCKER_COMPOSE_FILE config --services'", returnStdout: true).trim().split('\n')
-                        services.each { service ->
-                            sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker pull $service'"
-                            sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f $DOCKER_COMPOSE_FILE up -d $service'"
-                        }
+                        sh "scp -o StrictHostKeyChecking=no $DOCKER_COMPOSE_FILE $REMOTE_HOST:~/docker-compose.yml"
+                        sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f ~/docker-compose.yml pull'"
+                        sh "ssh -o StrictHostKeyChecking=no $REMOTE_HOST 'docker-compose -f ~/docker-compose.yml up -d'"
                     }
                 }
             }
