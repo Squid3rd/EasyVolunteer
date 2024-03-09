@@ -27,7 +27,7 @@ pipeline {
                 script {
                     sh 'echo $DOCKER_CREDENTIALS_PSW | docker login --username $DOCKER_CREDENTIALS_USR --password-stdin'
                     
-                    // Match the service names from docker-compose.yamสlssss
+                    // Match the service names from docker-compose.yamสlssssh
                     sh 'docker-compose push volunteer_website'
                     // sh 'docker-compose push mysql'
                     // sh 'docker-compose push phpmyadmin'
