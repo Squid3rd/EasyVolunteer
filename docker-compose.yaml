@@ -15,7 +15,7 @@ services:
       - application
   mysql:
     container_name: volunteer_mysql
-    image: nontapatsquid/volunteer_mysql:lastest
+    image: nontapatsquid/mysql:lastest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
@@ -32,7 +32,7 @@ services:
       - application
   phpmyadmin:
     container_name: volunteer_phpmyadmin
-    image: nontapatsquid/volunteer_phpmyadmin:lastest
+    image: nontapatsquid/phpmyadmin:lastest
     restart: always
     ports:
       - 8081:80
