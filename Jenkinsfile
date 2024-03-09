@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+        // Define variables Test-00-01-02-03-04
+        DOCKER_IMAGE       = 'nontapatsquid/volunteer_website:latest'
         DOCKER_CREDENTIALS = credentials('dockerhub')
     }
 
@@ -13,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images with Compose') {
+        stage('Build Docker Image with Compose') {
             steps {
                 dir('./') {
                     sh 'echo "Running in $(pwd)"'
@@ -26,11 +28,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo $DOCKER_CREDENTIALS_PSW | docker login --username $DOCKER_CREDENTIALS_USR --password-stdin'
-                    
-                    // Match the service names from docker-compose.yamสlsssshpj
-                    sh 'docker-compose push volunteer_website'
-                    sh 'docker-compose push mysql'
-                    sh 'docker-compose push phpmyadmin'
+                    sh 'docker push $DOCKER_IMAGE'
                 }
             }
         }
@@ -48,10 +46,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker-compose pull'
-                    // sh 'docker-compose up'
-                    sh 'docker run -d --name volunteer_website -p 3000:3000 nontapatsquid/volunteer_website:latest'
-                    sh 'docker run -d --name myphpadmin -p 8082:80 nontapatsquid/phpmyadmin:latest'
-                    sh 'docker run -d --name mysql -p 3306:3306 nontapatsquid/mysql:latest'
+                    sh 'docker-compose up -d'
                 }
             }
         }
