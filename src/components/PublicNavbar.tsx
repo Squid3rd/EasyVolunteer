@@ -29,9 +29,6 @@ const Navbar = () =>{
                                     <Link href="#about-me">
                                         <p className="text-base  font-bold">About</p>
                                     </Link>
-                                    <Link href="/home">
-                                        <p className="text-base  font-bold">Contact</p>
-                                    </Link>
                                     {!session?.user.role && (
                                     <Link href="/login">
                                         <p className="text-base  font-bold">Sign In</p>
