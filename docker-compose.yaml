@@ -27,14 +27,14 @@ services:
       test: ["CMD-SHELL", " netstat -an | grep -q 3306"]
       timeout: 5s
       retries: 3
-    volumes:
-      - "mysql_data:/var/lib/mysql"
+    # volumes:
+    #   - "mysql_data:/var/lib/mysql"
     networks:
       - application
   phpmyadmin:
     container_name: volunteer_phpmyadmin
     build: .
-    image: nontapatsquid/phpmyadmin:lastest
+    image: nontapatsquid/phpmyadmin
     restart: always
     ports:
       - 8081:80
