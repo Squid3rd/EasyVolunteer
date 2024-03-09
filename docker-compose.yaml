@@ -3,7 +3,6 @@ services:
   volunteer_website:
     container_name: volunteer_website
     build: .
-    image: nontapatsquid/volunteer_website:latest
     ports:
       - 3000:3000
     restart: on-failure
@@ -15,9 +14,8 @@ services:
       - application
   mysql:
     container_name: volunteer_mysql
-    build: .
-    image: nontapatsquid/mysql:latest
-    # command: --default-authentication-plugin=mysql_native_password
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - 3306:3306
@@ -27,17 +25,16 @@ services:
       test: ["CMD-SHELL", " netstat -an | grep -q 3306"]
       timeout: 5s
       retries: 3
-    # volumes:
-    #   - "mysql_data:/var/lib/mysql"
+    volumes:
+      - "mysql_data:/var/lib/mysql"
     networks:
       - application
   phpmyadmin:
     container_name: volunteer_phpmyadmin
-    build: .
-    image: nontapatsquid/phpmyadmin:latest
+    image: phpmyadmin
     restart: always
     ports:
-      - 8082:80
+      - 8081:80
     environment:
       PMA_HOST: mysql
     depends_on:
