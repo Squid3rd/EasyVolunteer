@@ -49,9 +49,9 @@ pipeline {
                 script {
                     sh 'docker-compose pull'
                     // sh 'docker-compose up'
-                    sh 'docker run -d --name volunteer_website -p 3000:3000 nontapatsquid/volunteer_website:lastest'
-                    sh 'docker run -d --name myphpadmin -p 8082:80 nontapatsquid/phpmyadmin:lastest'
-                    sh 'docker run -d --name mysql -p 3306:3306 nontapatsquid/mysql:lastest'
+                    sh 'docker run -d --name volunteer_website -p 3000:3000 nontapatsquid/volunteer_website:latest'
+                    sh 'docker run -d --name myphpadmin -p 8082:80 nontapatsquid/phpmyadmin:latest'
+                    sh 'docker run -d --name mysql -p 3306:3306 nontapatsquid/mysql:latest'
                 }
             }
         }
