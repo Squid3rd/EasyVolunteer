@@ -35,7 +35,7 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-      - 8081:80
+      - 8081:81
     environment:
       PMA_HOST: mysql
     depends_on:
