@@ -15,7 +15,7 @@ services:
       - application
   mysql:
     container_name: volunteer_mysql
-    build: .
+    # build: .
     image: nontapatsquid/mysql:lastest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -33,7 +33,7 @@ services:
       - application
   phpmyadmin:
     container_name: volunteer_phpmyadmin
-    build: .
+    # build: .
     image: nontapatsquid/phpmyadmin
     restart: always
     ports:
