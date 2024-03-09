@@ -23,9 +23,9 @@ const Navbar = () =>{
                                     <Link href="/">
                                         <p className="text-base font-bold">Home</p>
                                     </Link>
-                                    <Link href="/detail">
+{/*                                     <Link href="/detail">
                                         <p className="text-base  font-bold">Volunteer</p>
-                                    </Link>
+                                    </Link> */}
                                     <Link href="#about-me">
                                         <p className="text-base  font-bold">About</p>
                                     </Link>
