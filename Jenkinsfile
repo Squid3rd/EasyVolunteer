@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Define variables Test-00-01-02-03-04-s8
+        // Define variables Test-00-01-02-03-04-s8s
         DOCKER_IMAGE       = 'nontapatsquid/volunteer_website:latest'
         DOCKER_CREDENTIALS = credentials('dockerhub')
     }
