@@ -1,0 +1,32 @@
+[
+  {
+    "user_id": "0",
+    "first_name": "Hello",
+    "last_name": "World",
+    "email": "user00@email.com",
+    "username": "user_00",
+    "password": "password_00",
+    "phone": "0123456789",
+    "role": "admin"
+  },
+  {
+    "user_id": "1",
+    "first_name": "Lorem",
+    "last_name": "Ipsum",
+    "email": "user01@email.com",
+    "username": "user_01",
+    "password": "$2b$09$f5cfiLNhHtRSJ11UvClLauf5ZpzMpv9pw3Pa0MFJoIKDIInxv4MQu",
+    "phone": "0223456789",
+    "role": "normal"
+  },
+  {
+    "user_id": "2",
+    "first_name": "Sunday",
+    "last_name": "March",
+    "email": "user02@email.com",
+    "username": "user_02",
+    "password": "password_02",
+    "phone": "0323456789",
+    "role": "normal"
+  }
+]

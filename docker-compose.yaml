@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  volunteer_website:
+    container_name: volunteer_website
+    build: .
+    image: nontapatsquid/volunteer_website:latest
+    ports:
+      - 3000:3000
+    restart: on-failure
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+    networks:
+      - application
+  mysql:
+    container_name: volunteer_mysql
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", " netstat -an | grep -q 3306"]
+      timeout: 5s
+      retries: 3
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+    networks:
+      - application
+  phpmyadmin:
+    container_name: volunteer_phpmyadmin
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
+    networks:
+      - application
+networks:
+  application:
+    driver: bridge
+volumes:
+  mysql_data:
+  uploads_dir:
